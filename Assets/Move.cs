@@ -4,26 +4,28 @@ using UnityEngine;
 
 public class Move : MonoBehaviour
 {
-    [SerializeField] Rigidbody _rigidBody;
-    bool isStop = false;
-    [SerializeField] int _Speed;
+    [SerializeField] private Rigidbody _rb;
+    private bool isStop = false;
+    float speed = 5.0f;
+    float targetX = -100.0f; // 到達すべきX座標
 
-    void Awake()
+    void Start()
     {
-        _rigidBody = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
-        
-        
-        
-        
-        //TODO
-        //移動せよ
-        //https://candle-stoplight-544.notion.site/4e021f226d584730b715626436ccc330
+        if (!isStop)
+        {
+            _rb.velocity = -transform.right * speed;
+        }
 
+        if (transform.position.x <= targetX)
+        {
+            // 目標座標に到達したら速度を0に設定
+            _rb.velocity = Vector3.zero;
+            isStop = true; // 停止フラグを立てる
+        }
     }
 }
